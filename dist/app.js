@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
-const swagger_1 = require("./docs/swagger");
 const user_route_1 = __importDefault(require("./apis/routes/user.route"));
 const upload_route_1 = __importDefault(require("./apis/routes/upload.route"));
 const customers_route_1 = __importDefault(require("./apis/routes/customers.route"));
@@ -24,6 +23,5 @@ app.use("/api/customers", customers_route_1.default);
 app.use("/api/orders", orders_route_1.default);
 app.use("/api/campaigns", campaign_route_1.default);
 app.use("/api/segmentRules", segmentRules_route_1.default);
-(0, swagger_1.setupSwagger)(app);
 exports.default = app;
 //# sourceMappingURL=app.js.map
