@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createCampaign = createCampaign;
+exports.getAllCampaigns = getAllCampaigns;
 const response_1 = require("../../utils/response");
 const campaign_service_1 = require("../services/campaign.service");
 function createCampaign(req) {
@@ -27,6 +28,24 @@ function createCampaign(req) {
         return (0, response_1.success)({
             message: "Campaign created successfully",
             campaign: newCampaign
+        }, 200);
+    });
+}
+function getAllCampaigns(req) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { user } = req;
+        const campaigns = yield (0, campaign_service_1.getAllCampaignsService)(user.id);
+        if (!campaigns || campaigns.length === 0) {
+            return (0, response_1.error)("No segment rules found", 404);
+        }
+        if (!campaigns) {
+            return (0, response_1.success)({
+                message: "Error fetching campaigns rules",
+            }, 500);
+        }
+        return (0, response_1.success)({
+            message: "Campaigns fetched successfully",
+            campaigns: campaigns
         }, 200);
     });
 }
