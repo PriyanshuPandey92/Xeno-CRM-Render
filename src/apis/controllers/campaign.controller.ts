@@ -1,6 +1,6 @@
 import { AuthenticatedRequest } from "../../interfaces/interfaces";
 import { error, success } from "../../utils/response";
-import { createCampaignService } from "../services/campaign.service";
+import { createCampaignService, getAllCampaignsService} from "../services/campaign.service";
 
 export async function createCampaign(req: AuthenticatedRequest){
     const { name, ruleId, customerIds, message, intent} = req.body;
@@ -25,3 +25,26 @@ export async function createCampaign(req: AuthenticatedRequest){
         campaign: newCampaign
     }, 200)
 }
+
+export async function getAllCampaigns(req: AuthenticatedRequest){
+    const {user} = req;
+    const campaigns = await getAllCampaignsService(user!.id);
+    if (!campaigns || campaigns.length === 0) {
+        return error(
+            "No segment rules found"
+        , 404)
+    }
+        if (!campaigns) {
+            return success({
+                message: "Error fetching campaigns rules",
+            }, 500)
+        }
+        
+    
+        return success({
+            message: "Campaigns fetched successfully",
+            campaigns: campaigns
+        }
+        , 200)
+}
+
