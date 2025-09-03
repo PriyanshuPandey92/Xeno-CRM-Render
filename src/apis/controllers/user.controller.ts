@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { error, success } from '../../utils/response';
-import { createUserService, getUserByEmailService } from '../services/user.service';
+import { createUserService, getUserByEmailService, updateUserService } from '../services/user.service';
 import { OAuth2Client } from 'google-auth-library';
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -52,4 +52,23 @@ export async function getUserByEmail(req : Request){
         message: "User fetched successfully",
         user : user
     }, 200);
+}
+
+export async function updateUser(req: Request) {
+  const { id, field, value } = req.body;
+
+  if (!id || !field || typeof value === 'undefined') {
+    return error("Missing required fields: id, field, value", 400);
+  }
+
+  const updatedUser = await updateUserService(id, field, value);
+
+  if (!updatedUser) {
+    return error("Unable to update details", 422); 
+  }
+  return success({
+      message: "User details updated successfully",
+      user: updatedUser,
+    },200 
+  );
 }

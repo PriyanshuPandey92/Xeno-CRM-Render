@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
 import { checkError, handleError } from '../../utils/response';
-import { createUser, getUserByEmail } from '../controllers/user.controller';
+import { createUser, getUserByEmail, updateUser} from '../controllers/user.controller';
 
 const router = Router();
 
@@ -18,4 +18,7 @@ router.route("/getUserByEmail").get(
   handleError(getUserByEmail)
 )
 
+router.route('/update').post(
+  handleError(updateUser)
+)
 export default router;

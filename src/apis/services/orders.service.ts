@@ -12,3 +12,14 @@ export async function getAllOrdersService(userId: string) {
     return null;
   }
 }
+
+export async function updateOrderService(id: string, updateData: any) {
+  const order = await Order.findByIdAndUpdate(id, updateData, {
+    new: true,           
+    runValidators: true 
+  });
+  if (!order) {
+    throw new Error("Order not found");
+  }
+  return order;
+}

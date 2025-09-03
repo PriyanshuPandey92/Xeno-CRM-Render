@@ -13,3 +13,12 @@ export async function getAllCustomersService(userId: string) {
         throw new Error("Error fetching customers");
     }
 }
+
+export async function updateCustomerService(id: string, updateData: any) {
+  const customer = await Customer.findByIdAndUpdate(id, updateData, {
+    new: true, 
+    runValidators: true,
+  });
+  if (!customer) throw new Error("Customer not found");
+  return customer;
+}

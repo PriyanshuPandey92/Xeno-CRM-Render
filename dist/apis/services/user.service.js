@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createUserService = createUserService;
 exports.getUserByEmailService = getUserByEmailService;
+exports.updateUserService = updateUserService;
 const User_1 = __importDefault(require("../../models/User"));
 function createUserService(email, name, provider, avatarUrl) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -38,6 +39,11 @@ function getUserByEmailService(email) {
             return null;
         }
         return user;
+    });
+}
+function updateUserService(id, field, value) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield User_1.default.findByIdAndUpdate(id, { $set: { [field]: value } }, { new: true });
     });
 }
 //# sourceMappingURL=user.service.js.map

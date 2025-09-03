@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createUser = createUser;
 exports.getUserByEmail = getUserByEmail;
+exports.updateUser = updateUser;
 const response_1 = require("../../utils/response");
 const user_service_1 = require("../services/user.service");
 const google_auth_library_1 = require("google-auth-library");
@@ -55,6 +56,22 @@ function getUserByEmail(req) {
         return (0, response_1.success)({
             message: "User fetched successfully",
             user: user
+        }, 200);
+    });
+}
+function updateUser(req) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { id, field, value } = req.body;
+        if (!id || !field || typeof value === 'undefined') {
+            return (0, response_1.error)("Missing required fields: id, field, value", 400);
+        }
+        const updatedUser = yield (0, user_service_1.updateUserService)(id, field, value);
+        if (!updatedUser) {
+            return (0, response_1.error)("Unable to update details", 422);
+        }
+        return (0, response_1.success)({
+            message: "User details updated successfully",
+            user: updatedUser,
         }, 200);
     });
 }
