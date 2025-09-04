@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllOrdersService = getAllOrdersService;
+exports.updateOrderService = updateOrderService;
 const Order_1 = __importDefault(require("../../models/Order"));
 function getAllOrdersService(userId) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -26,6 +27,36 @@ function getAllOrdersService(userId) {
         catch (error) {
             console.error('Error fetching orders:', error);
             return null;
+        }
+    });
+}
+function updateOrderService(payload) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            // Find the order by id and update it
+            const updatedOrder = yield Order_1.default.findByIdAndUpdate(payload.id, {
+                $set: Object.assign(Object.assign(Object.assign(Object.assign({}, (payload.items !== undefined && { items: payload.items })), (payload.orderDate !== undefined && { orderDate: payload.orderDate })), (payload.amount !== undefined && { amount: payload.amount })), (payload.externalId !== undefined && { externalId: payload.externalId })),
+            }, { new: true } // return the updated document
+            );
+            if (!updatedOrder) {
+                return {
+                    success: false,
+                    status: 404,
+                    response: { message: "Order not found" },
+                };
+            }
+            return {
+                success: true,
+                status: 200,
+                response: { order: updatedOrder },
+            };
+        }
+        catch (error) {
+            return {
+                success: false,
+                status: 500,
+                response: { message: error.message || "Error updating order" },
+            };
         }
     });
 }

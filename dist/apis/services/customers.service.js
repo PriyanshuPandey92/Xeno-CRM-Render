@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllCustomersService = getAllCustomersService;
+exports.updateCustomerService = updateCustomerService;
 const Customer_1 = __importDefault(require("../../models/Customer"));
 function getAllCustomersService(userId) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -27,6 +28,17 @@ function getAllCustomersService(userId) {
             console.error("Error fetching customers:", error);
             throw new Error("Error fetching customers");
         }
+    });
+}
+function updateCustomerService(id, updateData) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const customer = yield Customer_1.default.findByIdAndUpdate(id, updateData, {
+            new: true,
+            runValidators: true,
+        });
+        if (!customer)
+            throw new Error("Customer not found");
+        return customer;
     });
 }
 //# sourceMappingURL=customers.service.js.map

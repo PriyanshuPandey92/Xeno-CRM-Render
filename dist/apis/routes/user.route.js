@@ -10,7 +10,6 @@ router.route('/create')
     (0, express_validator_1.body)('token').isString().notEmpty().withMessage('token is required'),
 ], response_1.checkError, (0, response_1.handleError)(user_controller_1.createUser));
 router.route("/getUserByEmail").get((0, response_1.handleError)(user_controller_1.getUserByEmail));
-router.route('/update')
-    .post((0, response_1.handleError)(user_controller_1.updateUser));
+router.route('/update').post((0, response_1.handleError)(user_controller_1.updateUser));
 exports.default = router;
 //# sourceMappingURL=user.route.js.map

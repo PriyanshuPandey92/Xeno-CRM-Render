@@ -8,8 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllOrders = getAllOrders;
+exports.updateOrderController = updateOrderController;
 const response_1 = require("../../utils/response");
 const orders_service_1 = require("../services/orders.service");
 function getAllOrders(req) {
@@ -26,6 +38,33 @@ function getAllOrders(req) {
             message: "Orders fetched successfully",
             orders: orders
         }, 200);
+    });
+}
+function updateOrderController(req) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const _a = req.body, { id } = _a, updateData = __rest(_a, ["id"]);
+            if (!id) {
+                return {
+                    success: false,
+                    status: 400,
+                    response: { message: "Order ID is required" },
+                };
+            }
+            const updatedOrder = yield (0, orders_service_1.updateOrderService)(req.body);
+            return {
+                success: true,
+                status: 200,
+                response: { order: updatedOrder },
+            };
+        }
+        catch (error) {
+            return {
+                success: false,
+                status: 500,
+                response: { message: error.message || "Failed to update order" },
+            };
+        }
     });
 }
 //# sourceMappingURL=orders.controller.js.map

@@ -9,5 +9,6 @@ const response_1 = require("../../utils/response");
 const customers_controller_1 = require("../controllers/customers.controller");
 const router = express_1.default.Router();
 router.route("/getAllCustomers").get(auth_middleware_1.isAuthenticated, (0, response_1.handleError)(customers_controller_1.getAllCustomers));
+router.route('/updateCustomer').post((0, response_1.handleError)(customers_controller_1.updateCustomerDetails));
 exports.default = router;
 //# sourceMappingURL=customers.route.js.map

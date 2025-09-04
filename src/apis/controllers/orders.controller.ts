@@ -30,7 +30,7 @@ export async function updateOrderController(req: Request) {
         response: { message: "Order ID is required" },
       };
     }
-    const updatedOrder = await updateOrderService(id, updateData);
+    const updatedOrder = await updateOrderService(req.body);
 
     return {
       success: true,
